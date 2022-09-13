@@ -79,10 +79,6 @@ jobs:
         mv *.iso "$(date +"%d-%m-%Y")"
         mv "$(date +"%d-%m-%Y")"/home-x86_64.iso/boot.iso "$(date +"%d-%m-%Y".iso
     - name: Upload to SourceForge
-     run: 
-      name: Upload
-        run: |
+  run: |
           ssh-keyscan frs.sourceforge.net >> ~/.ssh/known_hosts
           sshpass -p "${{ secrets.PASSWORD }}" rsync -arsP -e ssh build/ "${{ secrets.USERNAME }}@frs.sourceforge.net:${{ secrets.SOURCEFORGE_DIR }}"
-     
-     
