@@ -56,7 +56,7 @@ jobs:
         uses: actions/upload-artifact@v3.0.0
         with:
           name: $(date +"%d-%m-%Y").iso
-          path: $(date +"%d-%m-%Y")/images/boot.iso
+          path: $(date +"%d-%m-%Y")/boot.iso
   publish:
     if: ${{ always() }}
     needs: [build-home-x86_64]
