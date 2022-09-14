@@ -51,12 +51,12 @@ jobs:
           --logfile=$(pwd)/lorax.log \
           --tmp=$(pwd)/tmp \
           --rootfs-size=8 \
-          $(pwd)/"$(date +"%d-%m-%Y")"
+          $(pwd)/home-x86_64
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3.0.0
         with:
-          name: $(date +"%d-%m-%Y").iso
-          path: $(date +"%d-%m-%Y")/boot.iso
+          name: home-x86_64.iso
+          path: home-x86_64/boot.iso
   publish:
     if: ${{ always() }}
     needs: [build-home-x86_64]
@@ -75,8 +75,8 @@ jobs:
       uses: actions/download-artifact@v3.0.0
     - name: Prepare for Upload
       run: |
-        mkdir "$(date +"%d-%m-%Y")"
+        mkdir images
         mv $(date +"%d-%m-%Y").iso "$(date +"%d-%m-%Y")"
         mv "$(date +"%d-%m-%Y")"/home-x86_64.iso/boot.iso $(date +"%d-%m-%Y").iso
         ssh-keyscan frs.sourceforge.net >> ~/.ssh/known_hosts
-        sshpass -p "${{ secrets.PASSWORD }}" rsync -arsP -e ssh $(date +"%d-%m-%Y")/ "${{ secrets.USERNAME }}@frs.sourceforge.net:${{ secrets.SOURCEFORGE_DIR }}"
+        sshpass -p "${{ secrets.PASSWORD }}" rsync -arsP -e ssh images/ "${{ secrets.USERNAME }}@frs.sourceforge.net:${{ secrets.SOURCEFORGE_DIR }}"
