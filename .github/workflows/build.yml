@@ -56,7 +56,7 @@ jobs:
         uses: actions/upload-artifact@v3.0.0
         with:
           name: home-x86_64.iso
-          path: home-x86_64/boot.iso
+          path: home-x86_64/images/boot.iso
   publish:
     if: ${{ always() }}
     needs: [build-home-x86_64]
