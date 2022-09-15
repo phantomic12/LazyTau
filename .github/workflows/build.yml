@@ -76,6 +76,7 @@ jobs:
     - name: Prepare for Upload
       run: |
         mkdir images
-        mv home-x86_64.iso images/home-x86_64.iso
+        mv home-x86_64.iso images/home-x86_64.iso        
+        dnf install -y openssh-clients
         ssh-keyscan frs.sourceforge.net >> ~/.ssh/known_hosts
         sshpass -p "${{ secrets.PASSWORD }}" rsync -arsP -e ssh images/ "${{ secrets.USERNAME }}@frs.sourceforge.net:${{ secrets.SOURCEFORGE_DIR }}"
