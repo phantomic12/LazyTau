@@ -61,9 +61,6 @@ jobs:
     if: ${{ always() }}
     needs: [build-home-x86_64]
     runs-on: ubuntu-latest
-    container:
-      image: fedora:latest
-      options: --privileged
     steps:
     - name: Setup SSH
       uses: fastai/workflows/ssh@master
@@ -77,6 +74,5 @@ jobs:
       run: |
         mkdir images
         mv home-x86_64.iso images/home-x86_64.iso        
-        dnf install -y openssh-clients
         ssh-keyscan frs.sourceforge.net >> ~/.ssh/known_hosts
         sshpass -p "${{ secrets.PASSWORD }}" rsync -arsP -e ssh images/ "${{ secrets.USERNAME }}@frs.sourceforge.net:${{ secrets.SOURCEFORGE_DIR }}"
